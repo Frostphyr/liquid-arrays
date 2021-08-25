@@ -5,7 +5,7 @@ module Arrays
         if context.key?(@hash_name)
           hash = context[@hash_name]
         elsif create
-          hash = context[@hash_name] ||= {}
+          hash = context.scopes.last[@hash_name] ||= {}
         end
       else
         if context.key?('block_hash')

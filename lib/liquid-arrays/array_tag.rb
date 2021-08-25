@@ -5,7 +5,7 @@ module Arrays
         if context.key?(@array_name)
           array = context[@array_name]
         elsif create
-          array = context[@array_name] ||= []
+          array = context.scopes.last[@array_name] ||= []
         end
       else
         if context.key?('block_array')
