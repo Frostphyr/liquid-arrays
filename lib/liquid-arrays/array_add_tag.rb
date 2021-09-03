@@ -1,5 +1,5 @@
 module Arrays
-  class ArrayAddTag < ArrayTag
+  class ArrayAddTag < Liquid::Tag
     def parse(tokens)
       super
       parser = AttributeParser.new(@parse_context, 'value', @markup)
@@ -9,7 +9,7 @@ module Arrays
     end
 
     def render(context)
-      array = get_array(context, true)
+      array = ArrayHelper.get_array(context, @array_name, true)
       unless array.nil?
         array.push(@value.render(context))
       end

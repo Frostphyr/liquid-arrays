@@ -1,5 +1,5 @@
 module Arrays
-  class ArrayDeleteTag < ArrayTag
+  class ArrayDeleteTag < Liquid::Tag
     def parse(tokens)
       super
       parser = AttributeParser.new(@parse_context, @markup)
@@ -15,13 +15,15 @@ module Arrays
     end
 
     def render(context)
-      array = get_array(context, false)
+      array = ArrayHelper.get_array(context, @array_name, false)
       unless array.nil?
         if @index.nil?
           array.delete(@value.render(context))
         else
           index = @index.render(context)
-          array.delete_at(index) if index.is_a?(Integer) && !out_of_bounds?(array, index)
+          if index.is_a?(Integer) && index >= 0 && index < array.length
+            array.delete_at(index)
+          end
         end
       end
       ''

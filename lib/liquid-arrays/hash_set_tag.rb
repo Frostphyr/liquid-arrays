@@ -1,5 +1,5 @@
 module Arrays
-  class HashSetTag < HashTag
+  class HashSetTag < Liquid::Tag
     def parse(tokens)
       super
       parser = AttributeParser.new(@parse_context, @markup)
@@ -10,7 +10,7 @@ module Arrays
     end
 
     def render(context)
-      hash = get_hash(context, true)
+      hash = HashHelper.get_hash(context, @hash_name, true)
       unless hash.nil?
         hash[@key.render(context)] = @value.render(context)
       end

@@ -1,5 +1,5 @@
 module Arrays
-  class ArrayReplaceTag < ArrayTag
+  class ArrayReplaceTag < Liquid::Tag
     def parse(tokens)
       super
       parser = AttributeParser.new(@parse_context, @markup)
@@ -10,9 +10,9 @@ module Arrays
     end
 
     def render(context)
-      array = get_array(context, false)
+      array = ArrayHelper.get_array(context, @array_name, false)
       index = @index.render(context)
-      unless array.nil? || !index.is_a?(Integer) || out_of_bounds?(array, index)
+      unless array.nil? || !index.is_a?(Integer) || index < 0 || index >= array.length
         array[index] = @value.render(context)
       end
       ''

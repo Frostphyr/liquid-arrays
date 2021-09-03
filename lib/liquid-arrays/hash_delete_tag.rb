@@ -1,5 +1,5 @@
 module Arrays
-  class HashDeleteTag < HashTag
+  class HashDeleteTag < Liquid::Tag
     def parse(tokens)
       super
       parser = AttributeParser.new(@parse_context, 'key', @markup)
@@ -9,7 +9,7 @@ module Arrays
     end
 
     def render(context)
-      hash = get_hash(context, false)
+      hash = HashHelper.get_hash(context, @hash_name, false)
       unless hash.nil?
         hash.delete(@key.render(context))
       end
