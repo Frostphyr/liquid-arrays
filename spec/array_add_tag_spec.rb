@@ -40,6 +40,22 @@ describe Arrays::ArrayAddTag do
     end
   end
 
+  context 'when adding an array' do
+    let(:array) { '{%- array_add array:values value:"value1","value2" -%}' }
+
+    it 'creates and adds the array as en element to the main array' do
+      expect(render(array)).to eq([['value1', 'value2']])
+    end
+  end
+
+  context 'when adding a hash' do
+    let(:hash) { '{%- array_add array:values value:"key1">"value1","key2">"value2" -%}' }
+
+    it 'creates and adds the hash as en element to the array' do
+      expect(render(hash)).to eq([{'key1' => 'value1', 'key2' => 'value2'}])
+    end
+  end
+
   context 'when adding without a value' do
     let(:no_value) { '{%- array_add array:values -%}' }
 
