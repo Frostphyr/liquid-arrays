@@ -1,3 +1,4 @@
+require 'liquid-arrays/error_handler'
 require 'liquid-arrays/array_helper'
 require 'liquid-arrays/array_add_tag'
 require 'liquid-arrays/array_replace_tag'

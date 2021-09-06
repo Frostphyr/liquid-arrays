@@ -12,8 +12,18 @@ describe Arrays::ArrayAddTag do
     end
 
     context 'when the array is defined' do
-      it 'adds the value to the array' do
-        expect(render(string, values)).to eq(['value1', 'value0'])
+      context 'when the array is an array' do
+        it 'adds the value to the array' do
+          expect(render(string, values)).to eq(['value1', 'value0'])
+        end
+      end
+
+      context 'when the array is not an array' do
+        let(:values_string) { {'values' => 'value1'} }
+
+        it 'does nothing' do
+          expect(render(string, values_string)).to eq('value1')
+        end
       end
     end
 
@@ -59,8 +69,8 @@ describe Arrays::ArrayAddTag do
   context 'when adding without a value' do
     let(:no_value) { '{%- array_add array:values -%}' }
 
-    it 'raises ArgumentError' do
-      expect { render(no_value) }.to raise_error(Liquid::ArgumentError)
+    it 'raises SyntaxError' do
+      expect { render(no_value) }.to raise_error(Liquid::SyntaxError)
     end
   end
 end

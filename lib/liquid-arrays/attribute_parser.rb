@@ -19,13 +19,13 @@ module Arrays
 
     def consume_required_attribute(key, type = nil)
       attribute = consume_attribute(key, type)
-      raise Liquid::ArgumentError, "#{key} not specified" if attribute == nil
+      raise Liquid::SyntaxError, "#{key} not specified" if attribute == nil
       attribute
     end
 
     def finish
       unless @attributes.empty?
-        raise Liquid::ArgumentError, "invalid arguments #{@attributes.keys.join(',')}"
+        raise Liquid::SyntaxError, "invalid arguments #{@attributes.keys.join(',')}"
       end
     end
 

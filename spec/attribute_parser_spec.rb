@@ -540,10 +540,10 @@ describe Arrays::AttributeParser do
     end
 
     context 'when consuming nonexistent required attributes' do
-      it 'raises ArgumentError' do
+      it 'raises SyntaxError' do
         expect {
           parser.consume_required_attribute('key1')
-        }.to raise_error(Liquid::ArgumentError)
+        }.to raise_error(Liquid::SyntaxError)
       end
     end
   end
@@ -559,8 +559,8 @@ describe Arrays::AttributeParser do
     end
 
     context 'when finishing not empty parser' do
-      it 'raises ArgumentError' do
-        expect { parser.finish }.to raise_error(Liquid::ArgumentError)
+      it 'raises SyntaxError' do
+        expect { parser.finish }.to raise_error(Liquid::SyntaxError)
       end
     end
   end

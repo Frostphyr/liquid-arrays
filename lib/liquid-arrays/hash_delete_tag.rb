@@ -1,11 +1,15 @@
 module Arrays
   class HashDeleteTag < Liquid::Tag
+    include ErrorHandler
+    
     def parse(tokens)
       super
-      parser = AttributeParser.new(@parse_context, 'key', @markup)
-      @hash_name = parser.consume_attribute('hash', :id)
-      @key = parser.consume_required_attribute('key')
-      parser.finish
+      catch do
+        parser = AttributeParser.new(@parse_context, 'key', @markup)
+        @hash_name = parser.consume_attribute('hash', :id)
+        @key = parser.consume_required_attribute('key')
+        parser.finish
+      end
     end
 
     def render(context)

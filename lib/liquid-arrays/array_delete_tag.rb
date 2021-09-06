@@ -1,17 +1,21 @@
 module Arrays
   class ArrayDeleteTag < Liquid::Tag
+    include ErrorHandler
+    
     def parse(tokens)
       super
-      parser = AttributeParser.new(@parse_context, @markup)
-      @array_name = parser.consume_attribute('array', :id)
-      @value = parser.consume_attribute('value')
-      @index = parser.consume_attribute('index', :integer)
-      parser.finish
-      if @value.nil? && @index.nil?
-        raise Liquid::ArgumentError, 'no value or index specified'
-      elsif !@value.nil? && !@index.nil?
-        raise Liquid::ArgumentError, 'only value or index can be specified'
-      end
+      catch do
+        parser = AttributeParser.new(@parse_context, @markup)
+        @array_name = parser.consume_attribute('array', :id)
+        @value = parser.consume_attribute('value')
+        @index = parser.consume_attribute('index', :integer)
+        parser.finish
+        if @value.nil? && @index.nil?
+          raise Liquid::SyntaxError, 'no value or index specified'
+        elsif !@value.nil? && !@index.nil?
+          raise Liquid::SyntaxError, 'only value or index can be specified'
+        end
+      end   
     end
 
     def render(context)

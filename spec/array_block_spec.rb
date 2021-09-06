@@ -9,11 +9,24 @@ describe Arrays::ArrayBlock do
     end
   end
 
+  context 'when the array is not an array' do
+    let(:values_string) {
+      '{%- assign values = "value1" -%}'\
+      '{%- array values -%}'\
+        '{%- array_add "value2" -%}'\
+      '{%- endarray -%}'
+    }
+
+    it 'does nothing' do
+      expect(render(values_string)).to eq('value1')
+    end
+  end
+
   context 'when no array is specified' do
     let(:no_array) { '{%- array -%}{%- endarray -%}' }
 
-    it 'raises ArgumentError' do
-      expect{ render(no_array) }.to raise_error(Liquid::ArgumentError)
+    it 'raises SyntaxError' do
+      expect{ render(no_array) }.to raise_error(Liquid::SyntaxError)
     end
   end
 

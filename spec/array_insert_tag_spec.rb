@@ -40,16 +40,16 @@ describe Arrays::ArrayInsertTag do
         context 'when the index is not specified' do
           let(:no_index) { '{%- array_insert array:values value:"value0" -%}' }
 
-          it 'raises ArgumentError' do
-            expect { render(no_index) }.to raise_error(Liquid::ArgumentError)
+          it 'raises SyntaxError' do
+            expect { render(no_index) }.to raise_error(Liquid::SyntaxError)
           end
         end
 
         context 'when the value is not specified' do
           let(:no_value) { '{%- array_insert array:values index:0 -%}' }
 
-          it 'raises ArgumentError' do
-            expect { render(no_value) }.to raise_error(Liquid::ArgumentError)
+          it 'raises SyntaxError' do
+            expect { render(no_value) }.to raise_error(Liquid::SyntaxError)
           end
         end
       end
@@ -57,6 +57,14 @@ describe Arrays::ArrayInsertTag do
       context 'when the index is out of bounds' do
         it 'does nothing' do
           expect(render(index_2, values_1)).to eq(['value1'])
+        end
+      end
+
+      context 'when the array is not an array' do
+        let(:values_string) { {'values' => 'value1'} }
+
+        it 'does nothing' do
+          expect(render(index_0, values_string)).to eq('value1')
         end
       end
     end

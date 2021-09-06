@@ -25,6 +25,14 @@ describe Arrays::ArrayDeleteTag do
           expect(render(index_1, values_1)).to eq(['value1'])
         end
       end
+
+      context 'when the array is not an array' do
+        let(:values_string) { {'values' => 'value1'} }
+
+        it 'does nothing' do
+          expect(render(index_1, values_string)).to eq('value1')
+        end
+      end
     end
 
     context 'when the array is not specified' do
@@ -106,20 +114,20 @@ describe Arrays::ArrayDeleteTag do
   context 'when deleting with an index and a value' do
     let(:index_and_value) { '{%- array_delete array:values index:0 value:"value1" -%}' }
 
-    it 'raises ArgumentError' do
+    it 'raises SyntaxError' do
       expect {
         render(index_and_value, values_1)
-      }.to raise_error(Liquid::ArgumentError)
+      }.to raise_error(Liquid::SyntaxError)
     end
   end
 
   context 'when deleting without index or value' do
     let(:no_index_or_value) { '{%- array_delete array:values -%}' }
 
-    it 'raises ArgumentError' do
+    it 'raises SyntaxError' do
       expect {
         render(no_index_or_value, values_1)
-      }.to raise_error(Liquid::ArgumentError)
+      }.to raise_error(Liquid::SyntaxError)
     end
   end
 end

@@ -1,12 +1,16 @@
 module Arrays
   class HashSetTag < Liquid::Tag
+    include ErrorHandler
+    
     def parse(tokens)
       super
-      parser = AttributeParser.new(@parse_context, @markup)
-      @hash_name = parser.consume_attribute('hash', :id)
-      @key = parser.consume_required_attribute('key')
-      @value = parser.consume_required_attribute('value')
-      parser.finish
+      catch do
+        parser = AttributeParser.new(@parse_context, @markup)
+        @hash_name = parser.consume_attribute('hash', :id)
+        @key = parser.consume_required_attribute('key')
+        @value = parser.consume_required_attribute('value')
+        parser.finish
+      end
     end
 
     def render(context)

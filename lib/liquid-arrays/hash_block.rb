@@ -8,8 +8,11 @@ module Arrays
     end
 
     def render(context)
-      @hash = context[@hash_name] ||= {}
-      context.scopes.last[@hash_name] = @hash
+      if context.key?(@hash_name)
+        @hash = context[@hash_name]
+      else
+        context.scopes.last[@hash_name] = @hash = {}
+      end
       context.stack do
         context['block_hash'] = @hash
         @output = super

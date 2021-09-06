@@ -25,6 +25,14 @@ describe Arrays::HashDeleteTag do
           expect(render(key_0, values)).to eq({'key1' => 'value1'})
         end
       end
+
+      context 'when the hash is not a hash' do
+        let(:values_string) { {'values' => 'value1'} }
+
+        it 'does nothing' do
+          expect(render(key_0, values_string)).to eq('value1')
+        end
+      end
     end
 
     context 'when the hash is not specified' do
@@ -53,8 +61,8 @@ describe Arrays::HashDeleteTag do
   context 'when deleting without a key' do
     let(:no_key) { '{%- hash_delete hash:values -%}' }
 
-    it 'raises ArgumentError' do
-      expect { render(no_key, values) }.to raise_error(Liquid::ArgumentError)
+    it 'raises SyntaxError' do
+      expect { render(no_key, values) }.to raise_error(Liquid::SyntaxError)
     end
   end
 end

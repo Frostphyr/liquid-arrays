@@ -25,6 +25,14 @@ describe Arrays::HashSetTag do
           expect(render(key_1, values)).to eq({'key1' => 'value0'})
         end
       end
+
+      context 'when the hash is not a hash' do
+        let(:values_string) { {'values' => 'value1'} }
+
+        it 'does nothing' do
+          expect(render(key_0, values_string)).to eq('value1')
+        end
+      end
     end
 
     context 'when the hash is not specified' do
@@ -54,16 +62,16 @@ describe Arrays::HashSetTag do
   context 'when mapping without a key' do
     let(:no_key) { '{%- hash_set hash:values value:"value0" -%}' }
 
-    it 'raises ArgumentError' do
-      expect { render(no_key) }.to raise_error(Liquid::ArgumentError)
+    it 'raises SyntaxError' do
+      expect { render(no_key) }.to raise_error(Liquid::SyntaxError)
     end
   end
 
   context 'when mapping without a value' do
     let(:no_value) { '{%- hash_set hash:values key:"key0" -%}' }
 
-    it 'raises ArgumentError' do
-      expect { render(no_value) }.to raise_error(Liquid::ArgumentError)
+    it 'raises SyntaxError' do
+      expect { render(no_value) }.to raise_error(Liquid::SyntaxError)
     end
   end
 

@@ -1,12 +1,16 @@
 module Arrays
   class ArrayInsertTag < Liquid::Tag
+    include ErrorHandler
+    
     def parse(tokens)
       super
-      parser = AttributeParser.new(@parse_context, @markup)
-      @array_name = parser.consume_attribute('array', :id)
-      @index = parser.consume_required_attribute('index', :integer)
-      @value = parser.consume_required_attribute('value')
-      parser.finish
+      catch do
+        parser = AttributeParser.new(@parse_context, @markup)
+        @array_name = parser.consume_attribute('array', :id)
+        @index = parser.consume_required_attribute('index', :integer)
+        @value = parser.consume_required_attribute('value')
+        parser.finish
+      end
     end
 
     def render(context)
