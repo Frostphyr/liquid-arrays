@@ -12,7 +12,7 @@ module Arrays
           hash = context['block_hash']
         end
       end
-      hash
+      hash.is_a?(Hash) ? hash : nil
     end
   end
 end

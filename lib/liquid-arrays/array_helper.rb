@@ -12,7 +12,7 @@ module Arrays
           array = context['block_array']
         end
       end
-      array
+      array.is_a?(Array) ? array : nil
     end
   end
 end
