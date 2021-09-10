@@ -429,49 +429,56 @@ describe Arrays::AttributeParser do
       context 'when the attribute is an array' do
         let(:parser) do
           Arrays::AttributeParser.new(parse_context, 'default', 
-            'array:"value1",-2,value3')
+            'array1:value1,-2,"value3" array2:value1 array3:value1,"value2"')
+        end
+        let(:context_value1_array) do
+          Liquid::Context.new({'value1' => ['a', 'b']})
         end
 
         context 'when the type is an array' do
           it 'returns the array' do
-            expect(parser.consume_attribute('array', :array).render(context))
-              .to eq(['value1', -2, nil])
+            expect(parser.consume_attribute('array1', :array).render(context))
+              .to eq([nil, -2, 'value3'])
+            expect(parser.consume_attribute('array2', :array).render(context_value1_array))
+              .to eq(['a', 'b'])
+            expect(parser.consume_attribute('array3', :array).render(context_value1_array))
+              .to eq([['a', 'b'], 'value2'])
           end
         end
 
         context 'when the type is an id' do
           it 'returns nil' do
-            expect(parser.consume_attribute('array', :id)).to be_nil
+            expect(parser.consume_attribute('array1', :id)).to be_nil
           end
         end
 
         context 'when the type is a string' do
           it 'returns nil' do
-            expect(parser.consume_attribute('array', :string)).to be_nil
+            expect(parser.consume_attribute('array1', :string)).to be_nil
           end
         end
 
         context 'when the type is an integer' do
           it 'returns nil' do
-            expect(parser.consume_attribute('array', :integer)).to be_nil
+            expect(parser.consume_attribute('array1', :integer)).to be_nil
           end
         end
 
         context 'when the type is a float' do
           it 'returns nil' do
-            expect(parser.consume_attribute('array', :float)).to be_nil
+            expect(parser.consume_attribute('array1', :float)).to be_nil
           end
         end
 
         context 'when the type is a boolean' do
           it 'returns nil' do
-            expect(parser.consume_attribute('array', :boolean)).to be_nil
+            expect(parser.consume_attribute('array1', :boolean)).to be_nil
           end
         end
 
         context 'when the type is a hash' do
           it 'returns nil' do
-            expect(parser.consume_attribute('array', :hash)).to be_nil
+            expect(parser.consume_attribute('array1', :hash)).to be_nil
           end
         end
       end
