@@ -24,6 +24,12 @@ Or install it yourself as:
 Ensure any other requirements the software you're using might have for loading 
 plugins are met.
 
+## Error Handling
+
+Error handling uses Liquid's error modes to determine how to handle errors. 
+Please see [Liquid - Error Modes](https://github.com/Shopify/liquid#error-modes) 
+for more information.
+
 ## Usage
 
 There are several tags that will modify arrays and hashes in various ways. 
@@ -39,6 +45,42 @@ attribute needs specified, like so:
 
 ```liquid
 {% tag_name value %}
+```
+
+### Types
+
+Aside from the standard Liquid types, inline arrays and hashes may also be 
+defined and used for appropriate attributes. The syntax for each is as follows:
+
+```liquid
+{% tag_name array:value1,value2,value3 %}
+{% tag_name hash:key1>value1,key2>value2 %}
+```
+
+**Note**: If an array is defined with a single variable and that variable contains 
+an array, that array will be used instead of being the first element.
+
+### array_create tag
+
+Creates an array with opinional initial items. If the variable is already 
+defined it will reassign it.
+
+| Attribute | Required      | Type     | Description         |
+| --------- | ------------- | -------- | ------------------- |
+| array     | Yes (default) | Variable | The array to create |
+| items     | No            | Array    | The initial items   |
+
+
+#### Example
+
+```liquid
+{% array_create values1 %}
+{% array_create array:values2 items:"value1",2 %}
+```
+
+```ruby
+values1 => []
+values2 => ["value1", 2]
 ```
 
 ### array_add tag
@@ -166,6 +208,29 @@ for every operation. If the array doesn't exist, it will create an empty array.
 values => ["a", "z", "b"]
 ```
 
+### hash_create tag
+
+Creates a hash with opinional initial entries. If the variable is already 
+defined it will reassign it.
+
+| Attribute | Required      | Type     | Description         |
+| --------- | ------------- | -------- | ------------------- |
+| hash      | Yes (default) | Variable | The hash to create  |
+| entries   | No            | Hash     | The initial entries |
+
+
+#### Example
+
+```liquid
+{% hash_create values1 %}
+{% hash_create hash:values2 entries:"key1">"a","key2",3 %}
+```
+
+```ruby
+values1 => {}
+values2 => {"key1" => "a", "key2" => 3}
+```
+
 ### hash_set tag
 
 Sets a key-value mapping in a hash, either adding it if it doesn't already 
@@ -181,13 +246,13 @@ exist, it will create it first.
 #### Example
 
 ```liquid
-{% hash_set hash:values key:"value1" value:"a" %}
-{% hash_set hash:values key:"value2" value:3 %}
-{% hash_set hash:values key:"value3" value:false %}
+{% hash_set hash:values key:"key1" value:"a" %}
+{% hash_set hash:values key:"key2" value:3 %}
+{% hash_set hash:values key:"key3" value:false %}
 ```
 
 ```ruby
-values => {"value1" => "a", "value2" => 3, "value3" => false}
+values => {"key1" => "a", "key2" => 3, "key3" => false}
 ```
 
 ### hash_delete tag
@@ -202,16 +267,16 @@ Deletes a key-value mapping from a hash for a key.
 #### Example
 
 ```ruby
-values => {"value1" => "a", "value2" => 3, "value3" => false}
+values => {"key1" => "a", "key2" => 3, "key3" => false}
 ```
 
 ```liquid
-{% hash_delete hash:values key:"value1" %}
-{% hash_delete hash:values key:"value2" %}
+{% hash_delete hash:values key:"key1" %}
+{% hash_delete hash:values key:"key2" %}
 ```
 
 ```ruby
-values => {"value3" => false}
+values => {"key3" => false}
 ```
 
 ### hash block tag
@@ -227,15 +292,15 @@ every operation. If the hash doesn't exist, it will create an empty hash.
 
 ```liquid
 {% hash values %}
-  {% hash_set key:"value1" value:"a" %}
-  {% hash_set key:"value2" value:"b" %}
-  {% hash_set key:"value3" value:"c" %}
-  {% hash_delete "value2" %}
+  {% hash_set key:"key1" value:"a" %}
+  {% hash_set key:"key2" value:"b" %}
+  {% hash_set key:"key3" value:"c" %}
+  {% hash_delete "key2" %}
 {% endhash %}
 ```
 
 ```ruby
-values => {"value1" => "a", "value3" => "c"}
+values => {"key1" => "a", "key3" => "c"}
 ```
 
 ## License
