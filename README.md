@@ -7,22 +7,30 @@ insertion, replacement, and deletion.
 
 ## Installation
 
+### Bundler
+
 Add this line to your application's Gemfile:
 
 ```ruby
 gem 'liquid-arrays'
 ```
 
-And then execute:
+**NOTE:** You may alternatively want to use a 
+[version constraint](https://guides.rubygems.org/patterns/#pessimistic-version-constraint)
 
-    $ bundle install
+And then run the command:
 
-Or install it yourself as:
+```console
+$ bundle install
+```
 
-    $ gem install liquid-arrays
+### Gem
 
-Ensure any other requirements the software you're using might have for loading 
-plugins are met.
+Run the command:
+
+```console
+$ gem install liquid-arrays
+```
 
 ## Error Handling
 
@@ -305,4 +313,5 @@ values => {"key1" => "a", "key3" => "c"}
 
 ## License
 
-Liquid Arrays is licensed under [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0). You may also refer to the included LICENSE.txt file.
+Liquid Arrays is licensed under [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0). 
+You may also refer to the included LICENSE.txt file.
