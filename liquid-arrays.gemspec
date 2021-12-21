@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.summary       = 'Adds better support for arrays and hashes in Liquid'
   spec.homepage      = 'https://github.com/Frostphyr/liquid-arrays'
 
-  spec.files = Dir['lib/**/*'] + %w(Rakefile Gemfile README.md CHANGELOG.md LICENSE)
+  spec.files = Dir['lib/**/*'] + %w(Rakefile Gemfile README.md CHANGELOG.md LICENSE.txt)
   spec.require_paths = ['lib']
 
   spec.add_runtime_dependency 'liquid', ['>= 3', '< 5']
