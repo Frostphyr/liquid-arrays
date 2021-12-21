@@ -5,6 +5,10 @@ support for creating arrays using `split` and iteration for arrays and hashes.
 This adds support for standard array and hash operations, such as creation, 
 insertion, replacement, and deletion.
 
+## Requirements
+
+Liquid Arrays requires at least Liquid 3 but has no other dependencies.
+
 ## Installation
 
 ### Bundler
